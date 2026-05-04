@@ -7,6 +7,7 @@ import jakarta.persistence.LockModeType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Lock;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
@@ -17,5 +18,5 @@ public interface BankStockRepository extends JpaRepository<BankStock, String> {
     // The crucial lock for HA concurrency
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Query("SELECT b FROM BankStock b WHERE b.stockName = :stockName")
-    Optional<BankStock> findByStockNameForUpdate(String stockName);
+    Optional<BankStock> findByStockNameForUpdate(@Param("stockName") String stockName);
 }
